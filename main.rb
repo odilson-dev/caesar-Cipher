@@ -1,24 +1,15 @@
-str = "Bmfy k jgfgjh"
+def caesar_cipher(string, shift = 1)
+  alphabet  = Array('a'..'z')
+  non_caps  = Hash[alphabet.zip(alphabet.rotate(shift))]
 
-alphabet = ("a".."z").to_a
-alphabetMaj = ("A".."Z").to_a
-
-str = str.each_char.map{|al| al.ord - ?a.ord + 1}
-
-str2 = str.map do |index| 
-  if index == -64
-    " "
-  elsif index <= -6
-    alphabetMaj[index -1 + 32]
-  else
-    new_index = index - 1 + 5
-
-    if new_index > 26 
-       new_index -= 26
-    end
-    alphabet[new_index]
-    
-  end
+  
+  alphabet = Array('A'..'Z')
+  caps     = Hash[alphabet.zip(alphabet.rotate(shift))]
+  
+  encrypter = non_caps.merge(caps)
+  
+  
+  string.chars.map { |c| encrypter.fetch(c, c) }.join
 end
 
-puts str2.to_s
+p caesar_cipher("What a string!", 5)
